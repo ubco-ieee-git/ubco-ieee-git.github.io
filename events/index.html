@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Browse upcoming workshops and past events from IEEE UBC Okanagan.">
+  <meta name="theme-color" content="#102b40">
+  <title>Events | IEEE UBC Okanagan</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/events.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="IEEE UBC Okanagan home">
+        <img src="/assets/brand_assets/ieee%20mb%20blue.png" width="99" height="29" alt="">
+        <span class="brand-name">UBC Okanagan<small>Student Branch</small></span>
+      </a>
+      <nav aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/events/" aria-current="page">Events</a></li>
+          <li><a href="/our-team/">Our Team</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-intro">
+      <div class="container">
+        <p class="eyebrow">Branch calendar</p>
+        <h1>Events</h1>
+        <p class="lede">Find upcoming IEEE UBC Okanagan events and revisit past workshops.</p>
+      </div>
+    </section>
+    <div class="container section events-content">
+      <section aria-labelledby="upcoming-heading">
+        <div class="section-heading">
+          <h2 id="upcoming-heading">Upcoming events</h2>
+        </div>
+        <div id="upcoming-events" class="event-list" aria-live="polite"></div>
+      </section>
+      <section aria-labelledby="past-heading">
+        <div class="section-heading">
+          <h2 id="past-heading">Past events</h2>
+        </div>
+        <div id="past-events" class="event-list" aria-live="polite"></div>
+      </section>
+      <noscript><p>Enable JavaScript to see event details.</p></noscript>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="brand" href="/" aria-label="IEEE UBC Okanagan home">
+        <img src="/assets/brand_assets/ieee%20mb%20white%20png.png" width="99" height="29" alt="">
+        <span class="brand-name">UBC Okanagan<small>Student Branch</small></span>
+      </a>
+      <p>IEEE Student Branch · Kelowna, BC</p>
+    </div>
+  </footer>
+</body>
+</html>
