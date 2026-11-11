@@ -22,13 +22,17 @@
 }
 
 .hero p {
-  --fade-width: clamp(1.5rem, 6vw, 5rem);
+  --fade-width: clamp(1.75rem, 8vw, 6rem);
   align-self: flex-end;
-  max-width: 40rem;
+  max-width: min(100%, 58rem);
   padding: clamp(1rem, 2.5vw, 2rem) clamp(1rem, 4vw, 3.5rem);
-  padding-left: 6rem;
-  background: linear-gradient(to right, transparent,
-    color-mix(in srgb, var(--white) 95%, transparent) var(--fade-width));
+  padding-inline-start: calc(var(--fade-width) + clamp(.5rem, 1vw, .875rem));
+  background: linear-gradient(to right,
+    transparent,
+    color-mix(in srgb, var(--white) 15%, transparent) calc(var(--fade-width) * .25),
+    color-mix(in srgb, var(--white) 48%, transparent) calc(var(--fade-width) * .5),
+    color-mix(in srgb, var(--white) 81%, transparent) calc(var(--fade-width) * .75),
+    color-mix(in srgb, var(--white) 96%, transparent) var(--fade-width));
   color: var(--ink);
   font-size: clamp(1rem, 1.6vw, 1.15rem);
 }
