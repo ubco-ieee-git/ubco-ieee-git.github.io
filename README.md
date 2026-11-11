@@ -1,6 +1,6 @@
 # IEEE UBC Okanagan Student Branch
 
-The site is served from the repository root using GitHub Pages and its Jekyll build. Home, Events, Our Team, and Contact are the public navigation tabs. The store placeholder is available directly at `/store/`.
+The site is served from the repository root using GitHub Pages and its Jekyll build. The public navigation links to Home, Events, Our Team, and the Contact section of the homepage (`/#contact`). The store placeholder is available directly at `/store/`.
 
 ## Add an event
 
