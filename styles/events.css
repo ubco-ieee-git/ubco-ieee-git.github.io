@@ -1,0 +1,6 @@
+.past-event-band { background: var(--blue-60); }
+
+.event-list {
+  display: grid;
+  gap: 1rem;
+}

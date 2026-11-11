@@ -1,0 +1,64 @@
+.roster-section + .roster-section { padding-top: 0; }
+
+.member-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .9rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.member-grid-chairs { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 48rem; }
+
+.member-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .95rem;
+  border: 1px solid var(--line);
+  border-radius: .55rem;
+}
+
+.member-card img {
+  flex: none;
+  width: clamp(3.25rem, 7vw, 5rem);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+  background: var(--pale);
+}
+
+.member-info p {
+  margin-top: .3rem;
+  color: var(--muted);
+  font-size: .9rem;
+  line-height: 1.35;
+}
+
+.membership-band {
+  border-top: 1px solid var(--line);
+  background: var(--pale);
+}
+
+.membership-band h2 + p {
+  margin-top: .65rem;
+  color: var(--muted);
+}
+
+.split-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+}
+
+@media (max-width: 60rem) {
+  .member-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 36rem) {
+  .split-heading { flex-direction: column; align-items: flex-start; }
+  .member-grid { grid-template-columns: minmax(0, 1fr); }
+}

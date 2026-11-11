@@ -104,15 +104,18 @@ function eventCard(event, upcoming, { preview = false } = {}) {
   const details = element("div", "event-details");
   details.append(element("h3", "", event.title));
 
-  const metadata = element("ul", "event-meta");
-  for (const value of [event.time, event.location].filter(Boolean)) {
-    metadata.append(element("li", "", value));
-  }
-  if (metadata.childElementCount) details.append(metadata);
-  details.append(element("p", "event-description", event.description));
+  if (!preview) {
+    const metadata = element("ul", "event-meta");
+    for (const value of [event.time, event.location].filter(Boolean)) {
+      metadata.append(element("li", "", value));
+    }
+    if (metadata.childElementCount) details.append(metadata);
+    details.append(element("p", "event-description", event.description));
 
-  const link = upcoming ? signUpLink(event.signupUrl) : null;
-  if (link) details.append(link);
+    const link = upcoming ? signUpLink(event.signupUrl) : null;
+    if (link) details.append(link);
+  }
+
   const content = element("div", "event-content");
   content.append(details);
   if (event.date) content.append(calendarBadge(event));
