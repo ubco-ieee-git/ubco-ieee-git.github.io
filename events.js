@@ -1,4 +1,5 @@
 const featured = document.querySelector("#featured-event");
+const eventPreview = document.querySelector("#event-preview-stack");
 const upcomingList = document.querySelector("#upcoming-events");
 const pastList = document.querySelector("#past-events");
 const undatedList = document.querySelector("#undated-events");
@@ -52,6 +53,7 @@ function calendarBadge(event) {
   const sameMonthRange = end && end !== event.date && end.slice(0, 7) === event.date.slice(0, 7);
   const spansMonths = end && end !== event.date && !sameMonthRange;
   if (spansMonths) dates.push(end);
+  if (dates.length === 2) calendar.classList.add("event-calendar--pair");
 
   for (const date of dates) {
     if (spansMonths && date === end) {
@@ -82,10 +84,11 @@ function signUpLink(value) {
   return link;
 }
 
-function eventCard(event, upcoming) {
-  const card = element("article", event.image ? "event-card" : "event-card event-card--text");
+function eventCard(event, upcoming, { preview = false } = {}) {
+  const showPoster = event.image && !preview;
+  const card = element("article", showPoster ? "event-card" : "event-card event-card--text");
 
-  if (event.image) {
+  if (showPoster) {
     const poster = element("a", "event-poster");
     poster.href = "/assets/events/" + encodeURIComponent(event.image);
     poster.setAttribute("aria-label", "View poster for " + event.title);
@@ -166,6 +169,12 @@ async function loadEvents() {
     const cards = next ? [eventCard(next, true)]
       : latest ? [eventCard(latest, false)] : [];
     renderList(featured, cards, "There are no events listed yet.");
+  }
+
+  if (eventPreview) {
+    const cards = upcoming.slice(1, 4).map(event => eventCard(event, false, { preview: true }));
+    eventPreview.replaceChildren(...cards);
+    eventPreview.hidden = cards.length === 0;
   }
 
   if (upcomingList) {
