@@ -2,7 +2,11 @@
 layout: null
 ---
 [
-{%- for entry in site.data.events %}
-  {{ entry[1] | jsonify }}{% unless forloop.last %},{% endunless %}
+{%- assign separator = "" %}
+{%- for year in site.data.events %}
+  {%- for entry in year[1] %}
+  {{ separator }}{{ entry[1] | jsonify }}
+    {%- assign separator = "," %}
+  {%- endfor %}
 {%- endfor %}
 ]

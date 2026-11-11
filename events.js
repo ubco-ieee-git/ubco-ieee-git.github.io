@@ -1,6 +1,7 @@
 const featured = document.querySelector("#featured-event");
 const upcomingList = document.querySelector("#upcoming-events");
 const pastList = document.querySelector("#past-events");
+const undatedList = document.querySelector("#undated-events");
 const eventSections = [featured, upcomingList, pastList].filter(Boolean);
 
 const campusCalendar = new Intl.DateTimeFormat("en-CA", {
@@ -17,6 +18,13 @@ const displayDate = new Intl.DateTimeFormat("en-CA", {
   day: "numeric"
 });
 
+const dateList = new Intl.ListFormat("en-CA");
+const calendarMonth = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "UTC",
+  month: "short",
+  year: "numeric"
+});
+
 function element(tag, className, value) {
   const node = document.createElement(tag);
   if (className) node.className = className;
@@ -26,9 +34,42 @@ function element(tag, className, value) {
 
 function dateLabel(event) {
   const start = new Date(event.date);
+  if (event.additionalDates?.length) {
+    return dateList.format([event.date, ...event.additionalDates].map(date => displayDate.format(new Date(date))));
+  }
   return event.endDate && event.endDate !== event.date
     ? displayDate.formatRange(start, new Date(event.endDate))
     : displayDate.format(start);
+}
+
+function calendarBadge(event) {
+  const calendar = element("div", "event-calendar");
+  calendar.setAttribute("role", "group");
+  calendar.setAttribute("aria-label", dateLabel(event));
+
+  const dates = [event.date, ...(event.additionalDates ?? [])];
+  const end = event.endDate;
+  const sameMonthRange = end && end !== event.date && end.slice(0, 7) === event.date.slice(0, 7);
+  const spansMonths = end && end !== event.date && !sameMonthRange;
+  if (spansMonths) dates.push(end);
+
+  for (const date of dates) {
+    if (spansMonths && date === end) {
+      const separator = element("span", "calendar-separator", "to");
+      separator.setAttribute("aria-hidden", "true");
+      calendar.append(separator);
+    }
+    const tile = element("div", "calendar-tile");
+    tile.setAttribute("aria-hidden", "true");
+    const day = Number(date.slice(-2));
+    const days = sameMonthRange ? `${day}–${Number(end.slice(-2))}` : String(day);
+    tile.append(
+      element("span", "calendar-month", calendarMonth.format(new Date(date))),
+      element("span", "calendar-day", days)
+    );
+    calendar.append(tile);
+  }
+  return calendar;
 }
 
 function signUpLink(value) {
@@ -41,7 +82,7 @@ function signUpLink(value) {
   return link;
 }
 
-function eventCard(event, label, upcoming) {
+function eventCard(event, upcoming) {
   const card = element("article", event.image ? "event-card" : "event-card event-card--text");
 
   if (event.image) {
@@ -58,23 +99,21 @@ function eventCard(event, label, upcoming) {
   }
 
   const details = element("div", "event-details");
-  if (label) details.append(element("p", "event-tag", label));
   details.append(element("h3", "", event.title));
 
   const metadata = element("ul", "event-meta");
-  const date = element("time", "", dateLabel(event));
-  date.dateTime = event.date;
-  const dateItem = element("li");
-  dateItem.append(date);
-  metadata.append(dateItem);
-  for (const value of [event.time, event.location, event.cost].filter(Boolean)) {
+  for (const value of [event.time, event.location].filter(Boolean)) {
     metadata.append(element("li", "", value));
   }
-  details.append(metadata, element("p", "event-description", event.description));
+  if (metadata.childElementCount) details.append(metadata);
+  details.append(element("p", "event-description", event.description));
 
   const link = upcoming ? signUpLink(event.signupUrl) : null;
   if (link) details.append(link);
-  card.append(details);
+  const content = element("div", "event-content");
+  content.append(details);
+  if (event.date) content.append(calendarBadge(event));
+  card.append(content);
   return card;
 }
 
@@ -85,15 +124,19 @@ function validDate(value) {
 }
 
 function validEvent(event) {
-  return event
-    && typeof event.title === "string" && event.title.trim()
-    && typeof event.description === "string" && event.description.trim()
-    && validDate(event.date)
-    && (!event.endDate || (validDate(event.endDate) && event.endDate >= event.date));
+  if (!event || typeof event.title !== "string" || !event.title.trim()
+    || typeof event.description !== "string" || !event.description.trim()) return false;
+  const additionalDates = event.additionalDates ?? [];
+  if (!Array.isArray(additionalDates)) return false;
+  if (event.date === null) return !event.endDate && additionalDates.length === 0;
+  return validDate(event.date)
+    && (!event.endDate || (validDate(event.endDate) && event.endDate >= event.date))
+    && (!event.endDate || additionalDates.length === 0)
+    && additionalDates.every((date, index) => validDate(date) && date > (additionalDates[index - 1] || event.date));
 }
 
 function lastDay(event) {
-  return event.endDate || event.date;
+  return event.additionalDates?.at(-1) || event.endDate || event.date;
 }
 
 function renderList(target, cards, emptyMessage) {
@@ -111,24 +154,30 @@ async function loadEvents() {
   const parts = campusCalendar.formatToParts(new Date());
   const { year, month, day } = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
   const today = [year, month, day].join("-");
-  const upcoming = events.filter(event => lastDay(event) >= today)
+  const datedEvents = events.filter(event => event.date !== null);
+  const upcoming = datedEvents.filter(event => lastDay(event) >= today)
     .sort((a, b) => a.date.localeCompare(b.date));
-  const past = events.filter(event => lastDay(event) < today)
+  const past = datedEvents.filter(event => lastDay(event) < today)
     .sort((a, b) => lastDay(b).localeCompare(lastDay(a)) || b.date.localeCompare(a.date));
 
   if (featured) {
     const next = upcoming[0];
     const latest = past[0];
-    const cards = next ? [eventCard(next, "Next event", true)]
-      : latest ? [eventCard(latest, "Most recent event", false)] : [];
+    const cards = next ? [eventCard(next, true)]
+      : latest ? [eventCard(latest, false)] : [];
     renderList(featured, cards, "There are no events listed yet.");
   }
 
   if (upcomingList) {
-    renderList(upcomingList, upcoming.map(event => eventCard(event, "", true)), "No upcoming events are scheduled.");
+    renderList(upcomingList, upcoming.map(event => eventCard(event, true)), "No upcoming events are scheduled.");
   }
   if (pastList) {
-    renderList(pastList, past.map(event => eventCard(event, "", false)), "There are no past events listed yet.");
+    renderList(pastList, past.map(event => eventCard(event, false)), "There are no past events listed yet.");
+  }
+  if (undatedList) {
+    const undated = events.filter(event => event.date === null);
+    undatedList.replaceChildren(...undated.map(event => eventCard(event, false)));
+    undatedList.closest("section").hidden = undated.length === 0;
   }
 }
 

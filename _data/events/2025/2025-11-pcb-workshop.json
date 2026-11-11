@@ -2,10 +2,12 @@
   "title": "E-Workshop: PCB Design",
   "date": "2025-11-27",
   "endDate": "2025-11-30",
-  "description": "IEEE UBC Okanagan and the BattleBots Club hosted four sessions on schematic design, sourcing parts, laying out a printed circuit board, and exporting the design for manufacturing.",
+  "additionalDates": [],
   "time": "6:30–8:00 p.m.",
   "location": "EME 0050",
-  "cost": "$16",
+  "status": null,
+  "description": "IEEE UBC Okanagan and the BattleBots Club hosted four sessions on schematic design, sourcing parts, laying out a printed circuit board, and exporting the design for manufacturing.",
+  "signupUrl": null,
   "image": "November 2025_PCB Workshop Poster.png",
   "imageAlt": "E-Workshop poster listing the four PCB design sessions"
 }

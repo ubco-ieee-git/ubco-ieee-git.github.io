@@ -1,0 +1,42 @@
+﻿Event 1
+	Event 2
+	More Events (optional)
+	September
+	
+
+	SOE Industry/Alumni Booth - Sept. 15
+SUO Expo Booth - Sept. 25
+	
+
+	October
+	IEEE Xtreme Hackathon - Oct 31, Nov 1 (collab with college)
+	PCB Design - Oct. 26, 28
+Soldering Workshop - Ongoing
+	
+
+	November 
+	STEM Engagement Day - November 12th
+	Sip & Solve - November 17th at 7:00pm
+	Arduino Workshop Series - Weekly starting November 5th - 26th
+	December
+	IEEE Study Sesh - Dec. 9th
+	
+
+	January
+	CAD Golf - Jan. 12th
+	Industry Shadow Days - Jan. 22nd
+	Bakesale Fundraiser - Jan. 29th
+	February
+	Cybersecurity workshop
+February - 7th
+	ROS2 Workshop (need instructor) - Feb. 17th
+	
+
+	March
+	OITE 
+March 5th, 2027
+	Debugging Workshop (need instructor) - March 22nd
+	
+
+	April
+	IEEE Study Sesh - April 7th

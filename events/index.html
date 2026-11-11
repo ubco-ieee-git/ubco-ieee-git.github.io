@@ -28,39 +28,38 @@
     </div>
   </header>
 
-  <main id="main">
+  <main id="main" tabindex="-1">
     <section class="page-intro">
       <div class="container">
-        <p class="eyebrow">Branch calendar</p>
         <h1>Events</h1>
         <p class="lede">Find upcoming IEEE UBC Okanagan events and revisit past workshops.</p>
       </div>
     </section>
-    <div class="container section events-content">
-      <section aria-labelledby="upcoming-heading">
+    <section class="section" aria-labelledby="upcoming-heading">
+      <div class="container">
         <div class="section-heading">
           <h2 id="upcoming-heading">Upcoming events</h2>
         </div>
         <div id="upcoming-events" class="event-list" aria-live="polite"></div>
-      </section>
-      <section aria-labelledby="past-heading">
+      </div>
+    </section>
+    <section class="section pale-section" aria-labelledby="past-heading">
+      <div class="container">
         <div class="section-heading">
           <h2 id="past-heading">Past events</h2>
         </div>
         <div id="past-events" class="event-list" aria-live="polite"></div>
-      </section>
-      <noscript><p>Enable JavaScript to see event details.</p></noscript>
-    </div>
+      </div>
+    </section>
+    <section class="section" aria-labelledby="undated-heading" hidden>
+      <div class="container">
+        <div class="section-heading">
+          <h2 id="undated-heading">Events without a set date</h2>
+        </div>
+        <div id="undated-events" class="event-list"></div>
+      </div>
+    </section>
+    <noscript><p class="container">Enable JavaScript to see event details.</p></noscript>
   </main>
-
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <a class="brand" href="/" aria-label="IEEE UBC Okanagan home">
-        <img src="/assets/brand_assets/ieee%20mb%20white%20png.png" width="99" height="29" alt="">
-        <span class="brand-name">UBC Okanagan<small>Student Branch</small></span>
-      </a>
-      <p>IEEE Student Branch · Kelowna, BC</p>
-    </div>
-  </footer>
 </body>
 </html>
