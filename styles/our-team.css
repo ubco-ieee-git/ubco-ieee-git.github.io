@@ -1,3 +1,8 @@
+.team-page { background: var(--white); }
+.team-page .page-intro { background: transparent; }
+.team-page .lede { color: var(--ink); }
+
+.roster-section { background: var(--blue-40); }
 .roster-section + .roster-section { padding-top: 0; }
 
 .member-grid {
@@ -18,6 +23,7 @@
   padding: .95rem;
   border: 1px solid var(--line);
   border-radius: .55rem;
+  background: var(--white);
 }
 
 .member-card img {
@@ -32,19 +38,14 @@
 
 .member-info p {
   margin-top: .3rem;
-  color: var(--muted);
   font-size: .9rem;
   line-height: 1.35;
 }
 
-.membership-band {
-  border-top: 1px solid var(--line);
-  background: var(--pale);
-}
+.membership-band { border-top: 1px solid var(--line); }
 
 .membership-band h2 + p {
   margin-top: .65rem;
-  color: var(--muted);
 }
 
 .split-heading {
